@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Groupie</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A web app to join different groups and communities based on one's interest and preference."
+    />
+    <link
+      href="/assets/css/theme-saas.css"
+      rel="stylesheet"
+      type="text/css"
+      media="all"
+    />
+    <link
+      rel="preload"
+      as="font"
+      href="/assets/fonts/Inter-UI-upright.var.woff2"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      href="/assets/fonts/Inter-UI.var.woff2"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+  </head>
+
+  <body>
+    <div class="navbar-container">
+      <nav
+        class="navbar navbar-expand-lg justify-content-between navbar-light border-bottom-0 bg-white"
+        data-sticky="top"
+      >
+        <div class="container">
+          <a class="navbar-brand fade-page" href="/"> Groupie </a>
+          <button
+            class="navbar-toggler bg-white"
+            type="button"
+            data-toggle="collapse"
+            data-target=".navbar-collapse"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <img
+              class="icon navbar-toggler-open"
+              src="/assets/img/icons/interface/menu.svg"
+              alt="menu interface icon"
+              data-inject-svg
+            />
+            <img
+              class="icon navbar-toggler-close"
+              src="/assets/img/icons/interface/cross.svg"
+              alt="cross interface icon"
+              data-inject-svg
+            />
+          </button>
+          <div
+            class="collapse navbar-collapse justify-content-end col flex-fill px-0"
+          >
+            <div class="py-2 py-lg-0">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a href="/" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a href="/groups" class="nav-link">Groups</a>
+                </li>
+                <li class="nav-item">
+                  <a href="/about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a href="/contact" class="nav-link">Contact</a>
+                </li>
+              </ul>
+            </div>
+            <%  if(!currentUser){ %>
+            <div
+              class="collapse navbar-collapse justify-content-end col flex-fill px-0"
+            >
+              <a href="/users/login" class="btn btn-primary ml-lg-3">Sign In</a>
+            </div>
+            <%  } else { %>
+              <div
+              class="collapse navbar-collapse justify-content-end col flex-fill px-0"
+            >
+            <div class="dropdown ml-2 show">
+              <img src="/assets/img/new/IMG_20200101_204019_198.jpg" alt="User" class="avatar avatar-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              <span><a href="/dashboard"><%= currentUser.username %></a></span>
+            </div>
+            </div>
+            <%  } %>
+          </div>
+        </div>
+      </nav>
+    </div>
+    

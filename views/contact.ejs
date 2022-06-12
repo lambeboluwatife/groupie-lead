@@ -1,0 +1,111 @@
+<%- include ('partials/header') %>
+
+    <section class="bg-primary-3 jarallax min-vh-80 d-flex flex-column justify-content-center pb-0 o-hidden" data-jarallax data-speed="0.2" data-overlay>
+        <img src="assets/img/inner-6.jpg" alt="Image" class="jarallax-img opacity-30">
+        <div class="container py-5 position-relative">
+            <div class="row my-4 my-md-6" data-aos="fade-up">
+                <div class="col-lg-9 col-xl-8 text-light">
+                  <h1 class="display-4">Get In Touch</h1>
+                  <p class="lead mb-0">Have an report, issues, challenges, or suggestions, our team is ready to reply you.</p>
+                </div>
+            </div>
+        </div>
+        <div class="divider">
+            <img src="assets/img/dividers/divider-2.svg" alt="graphical divider" data-inject-svg />
+          </div>
+    </section>
+
+    <section>
+        <div class="container">
+          <div class="row text-center">
+            <div class="col-sm-4 mb-3 mb-sm-0">
+              <h3 class="h2">Visit</h3>
+              <span class="lead">
+                389 Greenpoint Ave
+                <br>Crown Heights, Brooklyn
+                <br>New York
+              </span>
+            </div>
+            <div class="col-sm-4 mb-3 mb-sm-0">
+              <h3 class="h2">Email</h3>
+              <a href="#" class="lead">groupie@gmail.com</a>
+            </div>
+            <div class="col-sm-4 mb-3 mb-sm-0">
+              <h3 class="h2">Call</h3>
+              <span class="lead">
+                +61 4728 3928
+              </span>
+              <div class="text-small text-muted">Mon - Fri, 9am - 5pm</div>
+            </div>
+          </div>
+        </div>
+    </section>
+
+    <section class="pt-0 bg-primary-3 text-light">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-md-9 col-lg-8 col-xl-6">
+              <div class="text-center mb-4">
+                <h2 class="h1">Leave a message</h2>
+                <p class="lead">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.
+                </p>
+              </div>
+              <form action="/forms/smtp.php" data-form-email novalidate>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Your Name *</label>
+                      <input name="contact-name" type="text" class="form-control" required>
+                      <div class="invalid-feedback">
+                        Please type your name.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Email Address *</label>
+                      <input name="contact-email" type="email" placeholder="you@yoursite.com" class="form-control" required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Company Name</label>
+                      <input name="contact-company" type="text" class="form-control" required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Contact Number</label>
+                      <input name="contact-phone" type="tel" class="form-control" required>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label>Message:</label>
+                      <textarea class="form-control" name="contact-message" rows="10" placeholder="How can we help?"></textarea>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div data-recaptcha data-sitekey="INSERT_YOUR_RECAPTCHA_V2_SITEKEY_HERE"></div>
+                  </div>
+                  <div class="col">
+                    <div class="d-none alert alert-success" role="alert" data-success-message>
+                      Thanks, a member of our team will be in touch shortly.
+                    </div>
+                    <div class="d-none alert alert-danger" role="alert" data-error-message>
+                      Please fill all fields correctly.
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-loading" data-loading-text="Sending">
+                      <img class="icon" src="assets/img/icons/theme/code/loading.svg" alt="loading icon" data-inject-svg />
+                      <span>Send Enquiry</span>
+                    </button>
+                  </div>
+                </div>
+              </form>
+  
+            </div>
+          </div>
+        </div>
+    </section>
+
+    <%- include ('partials/footer') %>

@@ -1,0 +1,53 @@
+<%- include ('../partials/header') %>
+<section>
+    <div class="container">
+      <div class="row justify-content-center text-center mb-6">
+        <div class="col-xl-8 col-lg-9">
+          <h4 class="display-4 mx-xl-6">Search result.</h4>
+          <p class="lead">
+            Here are the result for <%= search %>.
+          </p>
+        </div>
+      </div>
+      
+      <div class="row">
+        <% groups.forEach((group) => { %>
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="card">
+            <div class="card-body align-items-start">
+              <div class="mb-3">
+                <% function titleCase(str) { %>
+                  <% return str.toLowerCase().split(' ').map(function(word) { %>
+                    <% return (word.charAt(0).toUpperCase() + word.slice(1)); %>
+                  <% }).join(' '); %>
+                <% } %>
+                <h3 class="groupName"><%= titleCase(group.groupName) %></h3>
+              </div>
+              <p>
+                <%= titleCase(group.description) %>
+              </p>
+              <p>
+                <%= titleCase(group.course) %>
+              </p>
+              <p>
+                <%= titleCase(group.groupType) %>
+              </p>
+              <% let formatted_date = group.date.getDate() + "-" +
+              (group.date.getMonth() + 1) + "-" + group.date.getFullYear() %>
+              <p><strong>Added on: <%= formatted_date %></strong></p>
+              <p><strong>Added By: <%= group.author.username %></strong></p>
+
+                <%  if(!currentUser){ %>
+                    <p class="text-small text-muted mx-xl-6">Sign in to join</p>
+                <%  } else { %>
+                    <a href="<%= group.inviteUrl %>" class="btn btn-primary btn-block">Join</a>
+                <%  } %>
+            </div>
+          </div>
+        </div>
+        <%});%>
+      </div>
+
+    </div>
+  </section>
+<%- include ('../partials/footer') %>
