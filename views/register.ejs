@@ -38,13 +38,6 @@
           alt="Image"
           class="bg-image"
         />
-        <div class="divider divider-vertical d-none d-lg-block">
-          <img
-            src="/assets/img/dividers/divider-vertical-1.svg"
-            alt="graphical divider"
-            data-inject-svg
-          />
-        </div>
       </div>
       <div class="col px-5 position-relative d-flex align-items-center">
         <div class="row justify-content-center w-100">
@@ -54,7 +47,8 @@
               <span>We are happy to have you</span>
             </div>
             <%- include ('partials/messages') %>
-            <form action="/users/register" method="POST">
+            <%= typeof msg != 'undefined' ? msg : '' %>
+            <form action="/users/register" method="POST" enctype="multipart/form-data">
               <div class="form-group">
                 <input
                 type="text"
@@ -84,6 +78,19 @@
                 placeholder="Username"
                 value="<%= typeof username != 'undefined' ? username : '' %>"
                 />
+              </div>
+              <div class="form-group">
+                <input
+                type="file"
+                accept="image/png, image/jpg, image/gif, image/jpeg"
+                id="image"
+                name="image"
+                class="form-control"
+                placeholder="Avatar"
+                required
+                value="<%= typeof image != 'undefined' ? image : '' %>"
+                />
+                <small class="text-muted">Select Avatar</small>
               </div>
               <div class="form-group">
                 <input

@@ -1,6 +1,8 @@
+
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const mongoose = require("mongoose");
+const path = require("path");
 const methodOverride = require("method-override");
 const flash = require("connect-flash");
 const Group = require("./models/Group");
@@ -30,6 +32,7 @@ app.use(methodOverride("_method"));
 app.set("view engine", "ejs");
 
 app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname + "/uploads"));
 
 // Bodyparser
 app.use(express.urlencoded({ extended: false }));
@@ -63,6 +66,10 @@ app.use((req, res, next) => {
 app.use("/", require("./routes/index"));
 app.use("/users", require("./routes/users"));
 app.use("/groups", require("./routes/groups"));
+
+app.all('*', (req, res) => {
+  res.status(404).render('404');
+})
 
 const PORT = process.env.PORT || 5000;
 

@@ -29,6 +29,7 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
     } else {
       res.render("dashboard", {
         name: req.user.name,
+        image: req.user.image,
         username: req.user.username,
         groups: allGroups,
       });
