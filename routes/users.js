@@ -2,9 +2,43 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
+const path = require("path");
+const multer = require("multer");
 
 // User Model
 const User = require("../models/User");
+
+// Set Storage Engine
+const storage = multer.diskStorage({
+  destination: './uploads/',
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + "_" + Date.now() + "_" + path.extname(file.originalname));
+  },
+});
+
+// Init Upload
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 2000000 },
+  fileFilter: function (req, file, cb) {
+  checkFileType(file, cb);
+  }
+}).single("image")
+
+// Check File Type
+function checkFileType(file, cb) {
+  // Allowed ext
+  const filetypes = /jpeg|jpg|png|gif/;
+  // Check ext
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  const mimetype = filetypes.test(file.mimetype);
+
+  if (mimetype && extname) {
+    return cb(null, true)
+  } else {
+    cb('Error: Images Only!')
+  }
+}
 
 // Login Page
 router.get("/login", (req, res) => res.render("login"));
@@ -13,12 +47,13 @@ router.get("/login", (req, res) => res.render("login"));
 router.get("/register", (req, res) => res.render("register"));
 
 // Register Handle
-router.post("/register", (req, res) => {
+router.post("/register", upload, (req, res) => {
   const { name, email, username, password, password2 } = req.body;
+  const image = req.file.filename;
   let errors = [];
 
   // Check required fields
-  if (!name || !email || !username || !password || !password2) {
+  if (!name || !email || !username || !image || !password || !password2) {
     errors.push({ msg: "Please fill in all fields" });
   }
 
@@ -38,6 +73,7 @@ router.post("/register", (req, res) => {
       name,
       email,
       username,
+      image,
       password,
       password2,
     });
@@ -52,6 +88,7 @@ router.post("/register", (req, res) => {
           name,
           email,
           username,
+          image,
           password,
           password2,
         });
@@ -60,6 +97,7 @@ router.post("/register", (req, res) => {
           name,
           email,
           username,
+          image,
           password,
         });
 
