@@ -1,9 +1,45 @@
 const express = require("express");
 const router = express.Router();
+const path = require("path");
 const { ensureAuthenticated } = require("../config/auth");
+const multer = require("multer");
 
 // Group Model
 const Group = require("../models/Group");
+
+// Set Storage Engine
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + "_" + Date.now() + "_" + path.extname(file.originalname));
+  },
+});
+
+// Init Upload
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 2000000 },
+  fileFilter: function (req, file, cb) {
+  checkFileType(file, cb);
+  }
+});
+
+// Check File Type
+function checkFileType(file, cb) {
+  // Allowed ext
+  const filetypes = /jpeg|jpg|png|gif/;
+  // Check ext
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  const mimetype = filetypes.test(file.mimetype);
+
+  if (mimetype && extname) {
+    return cb(null, true)
+  } else {
+    cb('Error: Images Only!')
+  }
+}
 
 //INDEX - Show all Groups
 router.get("/", (req, res) => {
@@ -31,11 +67,12 @@ router.get("/new", ensureAuthenticated, (req, res) => {
 });
 
 // CREATE - Create new group
-router.post("/", ensureAuthenticated, (req, res) => {
+router.post("/", ensureAuthenticated, upload.single("coverImage"), (req, res) => {
   // get data from form and add to groups array
   const groupName = req.body.groupName.toLowerCase();
   const description = req.body.description.toLowerCase();
   const course = req.body.course.toLowerCase();
+   const coverImage = req.file.filename;
   const groupType = req.body.groupType.toLowerCase();
   const inviteUrl = req.body.inviteUrl;
   const author = {
@@ -47,6 +84,7 @@ router.post("/", ensureAuthenticated, (req, res) => {
     groupName,
     description,
     course,
+    coverImage,
     groupType,
     inviteUrl,
     author,
@@ -59,7 +97,7 @@ router.post("/", ensureAuthenticated, (req, res) => {
     } else {
       req.flash(
         "success_msg",
-        "Group Created"
+        "Group Added"
       );
       // redirect back to group page
       res.redirect("/dashboard");
@@ -71,20 +109,14 @@ router.post("/", ensureAuthenticated, (req, res) => {
 router.post("/search", (req, res) => {
   const search = req.body.search.toLowerCase();
   Group.find(
-    { $or: [{ groupName: search }, { course: { $regex: /search/ } }, { groupType: search }] },
+    { $or: [{ groupName: search }, { course: { $regex: search } }, { groupType: search }] },
     (err, allSearch) => {
       if (err) {
         console.log(err);
       } else {
-        if (allSearch == "") {
-          console.log(search);
-          console.log("not found");
-          res.redirect("/groups");
-        } else {
-          res.render("groups/search", {
-            groups: allSearch, search: search
-          })
-        }
+        res.render("groups/search", {
+          groups: allSearch, search: search
+        })
       }
     }
   );
@@ -103,15 +135,14 @@ router.get("/:id/edit", (req, res) => {
 
 // UPDATE ITEM ROUTE
 router.put("/:id", (req, res) => {
-  let group = Group.findById(req.params.id);
-
-  group = Group.findOneAndUpdate(req.params.id, req.body, (err, updatedGroup) => {
+ Group.findByIdAndUpdate(req.params.id, req.body, (err, updatedGroup) => {
     if (err) {
       res.status(500).redirect("/groups");
     } else {
+      console.log(req.body)
       req.flash(
         "success_msg",
-        "Group Edited"
+        "Group Updated"
       );
       res.status(200).redirect("/dashboard");
     }
