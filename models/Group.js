@@ -13,6 +13,10 @@ const groupSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  coverImage: {
+    type: String,
+    required: true,
+  },
   groupType: {
     type: String,
     required: true,

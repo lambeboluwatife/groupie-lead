@@ -23,7 +23,7 @@ router.get("/contact", (req, res) => {
 // Dashboard
 router.get("/dashboard", ensureAuthenticated, (req, res) => {
   // Get all groups from DB
-  Group.find({}, (err, allGroups) => {
+  Group.find({ "author.id": req.user.id }, (err, allGroups) => {
     if (err) {
       console.log(err);
     } else {

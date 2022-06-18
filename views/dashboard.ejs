@@ -91,6 +91,7 @@
     <section class="bg-primary-3 jarallax min-vh-80 d-flex flex-column justify-content-center pb-0 o-hidden" data-jarallax data-speed="0.2" data-overlay>
       <img src="assets/img/new/undraw_group_hangout_re_4t8r.svg" alt="Image" class="jarallax-img opacity-30">
       <div class="container py-5 position-relative">
+        <%- include ('partials/messages') %>
         <div class="row">
           <div class="col-xl-6 col-lg-7 col-md-9">
             <h1 class="display-4 text-light">Hello, <%= username %>.</h1>
@@ -118,10 +119,15 @@
     <section class="pt-5">
       <div class="container">
         <div class="row">
+          <% if (groups == "") { %>
+            <h4>no group(s) added yet.</h4>
+          <% } else { %>
           <% groups.forEach((group) => { %>
-            <% if(group.author.id.equals(currentUser._id)) { %>
           <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
             <div class="card">
+              <a href="#">
+                <img src="/<%= group.coverImage %>" alt="Image" class="card-img-top">
+              </a>
               <div class="card-body align-items-start">
                 <div class="mb-3">
                   <% function titleCase(str) { %>
@@ -162,8 +168,8 @@
               </div>
             </div>
           </div>
-          <% } %>
           <%});%>
+          <% } %>
         </div>
       </div>
     </section>

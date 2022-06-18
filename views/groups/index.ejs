@@ -52,6 +52,9 @@
           <% groups.forEach((group) => { %>
           <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
             <div class="card">
+              <a href="#">
+                <img src="/<%= group.coverImage %>" alt="Image" class="card-img-top">
+              </a>
               <div class="card-body align-items-start">
                 <div class="mb-3">
                  <% function titleCase(str) { %>
@@ -73,8 +76,13 @@
                 <% let formatted_date = group.date.getDate() + "-" +
                 (group.date.getMonth() + 1) + "-" + group.date.getFullYear() %>
                 <p><strong>Added on: <%= formatted_date %></strong></p>
-                <p><strong>Added By: <%= group.author.username %></strong></p>
-                <a href="<%= group.inviteUrl %>" class="btn btn-primary btn-block">Join</a>
+                  <p class="text-small text-muted mx-xl-6">added by <%= group.author.username %></p>
+                <hr>
+                  <%  if(!currentUser){ %>
+                      <p class="text-small text-muted mx-xl-6">Sign in to join</p>
+                  <% } else { %>
+                      <a href="<%= group.inviteUrl %>" class="btn btn-primary btn-block">Join</a>
+                  <%  } %>
               </div>
             </div>
           </div>
