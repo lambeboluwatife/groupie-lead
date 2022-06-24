@@ -35,6 +35,7 @@ const groupSchema = new mongoose.Schema({
       ref: "User",
     },
     username: String,
+    image: String,
   },
 });
 

@@ -81,91 +81,114 @@
             <div
               class="collapse navbar-collapse justify-content-end col flex-fill px-0"
             >
-              <a href="/users/logout" class="btn btn-primary ml-lg-3">Sign Out</a>
+              <a href="/users/logout" class="btn btn-primary ml-lg-3"
+                >Sign Out</a
+              >
             </div>
           </div>
         </div>
       </nav>
     </div>
 
-    <section class="bg-primary-3 jarallax min-vh-80 d-flex flex-column justify-content-center pb-0 o-hidden" data-jarallax data-speed="0.2" data-overlay>
-      <img src="assets/img/new/undraw_group_hangout_re_4t8r.svg" alt="Image" class="jarallax-img opacity-30">
+    <section
+      class="bg-primary-3 jarallax min-vh-80 d-flex flex-column justify-content-center pb-0 o-hidden"
+      data-jarallax
+      data-speed="0.2"
+      data-overlay
+    >
+      <img
+        src="assets/img/new/undraw_group_hangout_re_4t8r.svg"
+        alt="Image"
+        class="jarallax-img opacity-30"
+      />
       <div class="container py-5 position-relative">
         <%- include ('partials/messages') %>
         <div class="row">
           <div class="col-xl-6 col-lg-7 col-md-9">
-            <h1 class="display-4 text-light">Hello, <%= username %>.</h1>
+            <h1 class="display-4 text-light"><%= username %>'s profile.</h1>
           </div>
         </div>
         <div class="row mt-4">
           <div class="col">
             <p class="text-light">
-              Welcome back. You'll find the groups you created here. If you have any issues or question, don't hesitate to reach out.
-            </p>  
-            <a href="groups/new" class="lead text-light hover-arrow">add group here</a>
-            <!-- <a href="/profile" class="btn btn-primary">Profile</a> -->
+              Here, you can change your username and avatar.
+            </p>
           </div>
         </div>
       </div>
       <div class="decoration-wrapper">
-        <div class="decoration bottom left scale-2 flip-y d-none d-xl-block" data-jarallax-element="50">
-          <img class="bg-white" src="assets/img/decorations/deco-dots-4.svg" alt="deco-dots-4 decoration" data-inject-svg />
+        <div
+          class="decoration bottom left scale-2 flip-y d-none d-xl-block"
+          data-jarallax-element="50"
+        >
+          <img
+            class="bg-white"
+            src="assets/img/decorations/deco-dots-4.svg"
+            alt="deco-dots-4 decoration"
+            data-inject-svg
+          />
         </div>
         <div class="decoration bottom right scale-3" data-jarallax-element="80">
-          <img class="bg-primary-2" src="assets/img/decorations/deco-blob-13.svg" alt="deco-blob-13 decoration" data-inject-svg />
+          <img
+            class="bg-primary-2"
+            src="assets/img/decorations/deco-blob-13.svg"
+            alt="deco-blob-13 decoration"
+            data-inject-svg
+          />
         </div>
       </div>
     </section>
 
-    <section class="pt-5">
-      <div class="container">
-        <div class="row">
-          <% if (groups == "") { %>
-            <h4>no group(s) added yet.</h4>
-          <% } else { %>
-          <% groups.forEach((group) => { %>
-          <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
-            <div class="card">
-              <a href="#">
-                <img src="/<%= group.coverImage %>" alt="Image" class="card-img-top">
-              </a>
-              <div class="card-body align-items-start">
-                <div class="mb-3">
-                  <h3 class="groupName"><%= group.groupName %></h3>
-                </div>
-                <p>
-                  <%= group.description %>
-                </p>
-                <p>
-                  <%= group.course %>
-                </p>
-                <p>
-                  <%= group.groupType %>
-                </p>
-                <% let formatted_date = group.date.getDate() + "-" +
-                (group.date.getMonth() + 1) + "-" + group.date.getFullYear() %>
-                <p><strong>Added on: <%= formatted_date %></strong></p>
-                <a href="<%= group.inviteUrl %>" class="btn btn-primary btn-block">Join</a>
-                <hr>
-                <a
-                  class="btn btn-xs btn-warning text-white"
-                  href="/groups/<%= group._id %>/edit"
-                  >Edit</a
-                >
-
-                <form
-                      id="delete-form"
-                      style="display: inline; float: right;"
-                      action="/groups/<%= group.id %>?_method=DELETE"
-                      method="POST"
-                    >
-                      <button class="btn btn-xs btn-danger">Delete</button>
-                    </form>
+    <section class="row no-gutters min-vh-100 p-0">
+      <div class="col px-5 position-relative d-flex align-items-center">
+        <div class="row justify-content-center w-100">
+          <div class="col-md-8 col-lg-7 col-xl-6">
+            <br />
+            <div class="text-center mb-4">
+                <img src="/<%= image %>" alt="user" class="avatar avatar-xlg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <h1 class="mb-1">Edit Profile</h1>
+            </div>
+            <form
+              action="/profile/<%= id %>?_method=PUT"
+              method="POST"
+              enctype="multipart/form-data"
+            >
+              <div class="form-group">
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  class="form-control"
+                  placeholder="Username"
+                  value="<%= username %>"
+                />
               </div>
+              <div class="form-group">
+                <input
+                  type="file"
+                  accept="image/png, image/jpg, image/gif, image/jpeg"
+                  id="image"
+                  name="image"
+                  class="form-control form-control-lg"
+                />
+                <small class="text-muted">Change Avatar</small>
+                <input
+                  type="hidden"
+                  name="old_image"
+                  value="<%= image %>"
+                />
+              </div>
+              <div class="form-group">
+                <button class="btn-block btn btn-primary" type="submit">
+                  Edit
+                </button>
+              </div>
+            </form>
+            <br />
+            <div>
+              <a href="/dashboard" class="btn btn-primary">Dashboard</a>
             </div>
           </div>
-          <%});%>
-          <% } %>
         </div>
       </div>
     </section>
@@ -180,12 +203,12 @@
               <div
                 class="position-relative d-flex flex-column flex-md-row justify-content-between align-items-center"
               >
-                  <div class="h3 text-center mb-md-0">
-                    We are happy to have you <%= currentUser.username %>
-                  </div>
-                  <a href="/users/logout" class="btn btn-lg btn-white">
-                    Sign Out
-                  </a>
+                <div class="h3 text-center mb-md-0">
+                  We are happy to have you <%= currentUser.username %>
+                </div>
+                <a href="/users/logout" class="btn btn-lg btn-white">
+                  Sign Out
+                </a>
               </div>
               <div class="decoration layer-0">
                 <img
