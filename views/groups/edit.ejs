@@ -31,22 +31,7 @@
   </head>
 
   <body>
-
     <section class="row no-gutters min-vh-100 p-0">
-      <div class="col-lg-4 bg-primary-3 d-flex justify-content-end">
-        <img
-          src="/assets/img/new/undraw_join_of2w.svg"
-          alt="Image"
-          class="bg-image"
-        />
-        <div class="divider divider-vertical d-none d-lg-block">
-          <img
-            src="/assets/img/dividers/divider-vertical-1.svg"
-            alt="graphical divider"
-            data-inject-svg
-          />
-        </div>
-      </div>
       <div class="col px-5 position-relative d-flex align-items-center">
         <div class="row justify-content-center w-100">
           <div class="col-md-8 col-lg-7 col-xl-6">
@@ -54,66 +39,90 @@
               <h1 class="mb-1">Edit <%= group.groupName %></h1>
             </div>
             <%- include ('../partials/messages') %>
-            <form action="/groups/<%= group._id %>?_method=PUT" method="POST">
+            <form
+              action="/groups/<%= group._id %>?_method=PUT"
+              method="POST"
+              enctype="multipart/form-data"
+            >
               <div class="form-group">
                 <input
-                type="text"
-                id="groupName"
-                name="groupName"
-                class="form-control"
-                placeholder="Group Name"
-                value="<%= group.groupName %>"
+                  type="text"
+                  id="groupName"
+                  name="groupName"
+                  class="form-control"
+                  placeholder="Group Name"
+                  value="<%= group.groupName %>"
                 />
               </div>
               <div class="form-group">
                 <input
-                ttype="text"
-                id="description"
-                name="description"
-                class="form-control"
-                placeholder="Description"
-                value="<%= group.description %>"
+                  ttype="text"
+                  id="description"
+                  name="description"
+                  class="form-control"
+                  placeholder="Description"
+                  value="<%= group.description %>"
                 />
               </div>
               <div class="form-group">
                 <input
-                type="text"
-                id="course"
-                name="course"
-                class="form-control"
-                placeholder="Course"
-                value="<%= group.course %>"
+                  type="text"
+                  id="course"
+                  name="course"
+                  class="form-control"
+                  placeholder="Course"
+                  value="<%= group.course %>"
                 />
               </div>
               <div class="form-group">
                 <input
-                type="text"
-                id="groupType"
-                name="groupType"
-                class="form-control"
-                placeholder="Group Type e.g Slack, WhatsApp, Discord, Telegram, or others."
-                value="<%= group.groupType %>"
+                  type="file"
+                  accept="image/png, image/jpg, image/gif, image/jpeg"
+                  id="coverImage"
+                  name="coverImage"
+                  class="form-control form-control-lg"
+                />
+                <img
+                  src="/<%= group.coverImage %>"
+                  width="100"
+                  class="img-thumbnail mt-1"
+                />
+                <small class="text-muted">Edit Cover Image</small>
+              </div>
+              <input
+                type="hidden"
+                name="old_image"
+                value="<%= group.coverImage %>"
+              />
+              <div class="form-group">
+                <input
+                  type="text"
+                  id="groupType"
+                  name="groupType"
+                  class="form-control"
+                  placeholder="Group Type e.g Slack, WhatsApp, Discord, Telegram, or others."
+                  value="<%= group.groupType %>"
                 />
               </div>
               <div class="form-group">
                 <input
-                type="text"
-                id="inviteUrl"
-                name="inviteUrl"
-                class="form-control"
-                placeholder="Invite URL"
-                value="<%= group.inviteUrl %>"
+                  type="text"
+                  id="inviteUrl"
+                  name="inviteUrl"
+                  class="form-control"
+                  placeholder="Invite URL"
+                  value="<%= group.inviteUrl %>"
                 />
               </div>
               <div class="form-group">
                 <button class="btn-block btn btn-primary" type="submit">
-                  Save
+                  Edit
                 </button>
               </div>
               <hr />
             </form>
             <div>
-              <a href="/groups" class="btn btn-primary">Back</a>
+              <a href="/dashboard" class="btn btn-primary">Back</a>
             </div>
           </div>
         </div>
@@ -149,7 +158,10 @@
       src="/assets/js/ion.rangeSlider.min.js"
     ></script>
     <!-- Isotope (masonry layouts and filtering) -->
-    <script type="text/javascript" src="/assets/js/isotope.pkgd.min.js"></script>
+    <script
+      type="text/javascript"
+      src="/assets/js/isotope.pkgd.min.js"
+    ></script>
     <!-- jarallax (parallax effect and video backgrounds) -->
     <script type="text/javascript" src="/assets/js/jarallax.min.js"></script>
     <script

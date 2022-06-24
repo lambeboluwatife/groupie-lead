@@ -24,26 +24,27 @@
             </a>
             <div class="card-body align-items-start">
               <div class="mb-3">
-                <% function titleCase(str) { %>
-                  <% return str.toLowerCase().split(' ').map(function(word) { %>
-                    <% return (word.charAt(0).toUpperCase() + word.slice(1)); %>
-                  <% }).join(' '); %>
-                <% } %>
-                <h3 class="groupName"><%= titleCase(group.groupName) %></h3>
+                <h3 class="groupName"><%= group.groupName %></h3>
               </div>
               <p>
-                <%= titleCase(group.description) %>
+                <%= group.description %>
               </p>
               <p>
-                <%= titleCase(group.course) %>
+                <%= group.course %>
               </p>
               <p>
-                <%= titleCase(group.groupType) %>
+                <%= group.groupType %>
               </p>
               <% let formatted_date = group.date.getDate() + "-" +
               (group.date.getMonth() + 1) + "-" + group.date.getFullYear() %>
               <p><strong>Added on: <%= formatted_date %></strong></p>
-                <p class="text-small text-muted mx-xl-6">added by <%= group.author.username %></p>
+              <div class="d-flex align-items-center mt-3">
+                <img src="/<%= group.author.image %>" alt="user" class="avatar avatar-sm">
+                <div class="ml-1">
+                  <span class="text-small text-muted">By</span>
+                  <span class="text-small"><%= group.author.username %></span>
+                </div>
+              </div>
               <hr>
                 <%  if(!currentUser){ %>
                     <p class="text-small text-muted mx-xl-6">Sign in to join</p>
